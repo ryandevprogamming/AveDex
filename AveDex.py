@@ -58,9 +58,10 @@ def exibir_menu():
     print("MENU PRINCIPAL")
     exibir_linha()
     print("1 - Listar aves")
-    print("2 - Conhecer uma ave (Detalhes)")
+    print("2 - Conhecer uma ave (Detalhes por ID)")
     print("3 - Ver uma curiosidade sobre aves")
     print("4 - Sobre a AveDex")
+    print("5 - Buscar aves por parte do nome")
     print("0 - Sair")
 
 
@@ -109,6 +110,46 @@ def selecionar_ave_por_id(catalogo):
         exibir_detalhes_ave(ave_encontrada)
 
 
+def buscar_aves_por_nome(catalogo, termo_busca):
+    # Criamos uma lista vazia para guardar as aves encontradas.
+    resultados = []
+    # Percorremos cada ave cadastrada no catálogo.
+    for ave in catalogo:
+        # Convertemos o nome da ave para minúsculas.
+        # Isso evita diferença entre "Bem" e "bem".
+        nome = ave["nome_popular"].lower()
+        # Também convertemos o termo digitado para minúsculas.
+        termo = termo_busca.lower()
+        # O operador "in" verifica se um texto aparece dentro de outro.
+        # Exemplo: "barro" está dentro de "joão-de-barro".
+        if termo in nome:
+            resultados.append(ave)
+    # Ao final, devolvemos a lista de aves encontradas.
+    return resultados
+
+
+def interagir_busca_por_nome(catalogo):
+    print()
+    print("-" * 50)
+    print("BUSCAR AVE POR NOME")
+    print("-" * 50)
+    
+    termo = input("Digite o nome ou parte do nome da ave: ").strip()
+    
+    if not termo:
+        print("Busca cancelada. O termo não pode ser vazio.")
+        return
+
+    resultados = buscar_aves_por_nome(catalogo, termo)
+    
+    if len(resultados) == 0:
+        print("\nNenhuma ave encontrada com esse termo.")
+    else:
+        print(f"\nForam encontradas {len(resultados)} ave(s):")
+        for ave in resultados:
+            print(f"- {ave['nome_popular']} (ID: {ave['id']})")
+
+
 def mostrar_curiosidade():
     print("Curiosidade Geral:")
     print("Muitas aves ajudam no equilíbrio ambiental ao dispersar sementes.")
@@ -153,6 +194,9 @@ while opcao_menu != "0":
 
     elif opcao_menu == "4":
         mostrar_sobre()
+
+    elif opcao_menu == "5":
+        interagir_busca_por_nome(catalogo_aves)
 
     elif opcao_menu == "0":
         print(f"Até logo, {nome_usuario}! Obrigado por usar a AveDex.")
