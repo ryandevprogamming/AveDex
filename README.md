@@ -16,6 +16,13 @@ Boas Práticas de Programação.
 - [x] Opção inválida no menu
 - [x] Encerramento do programa
 
+## Fontes dos dados
+- Nome da instituição ou site: endereço consultado
+- Nome da instituição ou site: endereço consultado
+## Evolução do projeto
+Nesta versão, as aves foram organizadas em uma lista de
+dicionários e as funcionalidades foram separadas em funções.
+
 
 ```bash
 python avedex.py
