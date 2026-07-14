@@ -1,23 +1,12 @@
-# --- Banco de dados inicial (Catálogo de Aves atualizado com detalhes) ---
+# --- Banco de dados inicial (Catálogo de Aves atualizado) ---
 catalogo_aves = [
     {
-        # Identificador único da ave.
         "id": 1,
-
-        # Nome mais conhecido da ave.
         "nome_popular": "Bem-te-vi",
-
-        # Nome científico da espécie.
         "nome_cientifico": "Pitangus sulphuratus",
-
-        # Classificação taxonômica.
         "ordem": "Passeriformes",
         "familia": "Tyrannidae",
-
-        # Tipo principal de dieta.
         "dieta_tipo": "Onívora",
-
-        # Informações descritivas usadas nos detalhes.
         "habitat": "Áreas abertas, cidades e bordas de florestas",
         "alimentacao": "Insetos, frutos e pequenos animais",
         "curiosidade": "Seu canto parece dizer o próprio nome."
@@ -31,7 +20,7 @@ catalogo_aves = [
         "dieta_tipo": "Insetívora",
         "habitat": "Campos, cidades e áreas rurais",
         "alimentacao": "Insetos e outros invertebrados",
-        "curiosidade": "É conhecido por construir ninhos de barro."
+        "curiosidade": "É conhecido por construir ninhos de barro com formato de forno."
     },
     {
         "id": 3,
@@ -43,6 +32,28 @@ catalogo_aves = [
         "habitat": "Campos e áreas abertas",
         "alimentacao": "Sementes e pequenos insetos",
         "curiosidade": "Possui canto forte e melodioso."
+    },
+    {
+        "id": 4,
+        "nome_popular": "Carcará",
+        "nome_cientifico": "Caracara plancus",
+        "ordem": "Falconiformes",
+        "familia": "Falconidae",
+        "dieta_tipo": "Carnívora (Necrófaga/Onívora)",
+        "habitat": "Campos, pastagens e centros urbanos",
+        "alimentacao": "Presas vivas, carcaças, frutos e ovos",
+        "curiosidade": "É um predador oportunista muito inteligente que caminha bastante pelo chão."
+    },
+    {
+        "id": 5,
+        "nome_popular": "Beija-flor-tesoura",
+        "nome_cientifico": "Eupetomena macroura",
+        "ordem": "Apodiformes",
+        "familia": "Trochilidae",
+        "dieta_tipo": "Nectarívora",
+        "habitat": "Jardins, parques e bordas de matas",
+        "alimentacao": "Néctar de flores e pequenos insetos em pleno voo",
+        "curiosidade": "Possui uma cauda longa e bifurcada que lembra uma tesoura."
     }
 ]
 
@@ -111,20 +122,12 @@ def selecionar_ave_por_id(catalogo):
 
 
 def buscar_aves_por_nome(catalogo, termo_busca):
-    # Criamos uma lista vazia para guardar as aves encontradas.
     resultados = []
-    # Percorremos cada ave cadastrada no catálogo.
     for ave in catalogo:
-        # Convertemos o nome da ave para minúsculas.
-        # Isso evita diferença entre "Bem" e "bem".
         nome = ave["nome_popular"].lower()
-        # Também convertemos o termo digitado para minúsculas.
         termo = termo_busca.lower()
-        # O operador "in" verifica se um texto aparece dentro de outro.
-        # Exemplo: "barro" está dentro de "joão-de-barro".
         if termo in nome:
             resultados.append(ave)
-    # Ao final, devolvemos a lista de aves encontradas.
     return resultados
 
 
@@ -157,8 +160,8 @@ def mostrar_curiosidade():
 
 def mostrar_sobre():
     print("Sobre a AveDex:")
-    print("A AveDex será um catálogo interativo de aves.")
-    print("Ao longo da disciplina, adicionaremos novas funcionalidades.")
+    print("A AveDex é um catálogo interativo de aves brasileiras.")
+    print("Desenvolvida para ajudar estudantes e entusiastas a conhecerem nossa fauna!")
 
 
 def pausar():
