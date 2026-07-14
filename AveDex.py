@@ -1,8 +1,29 @@
-# --- Banco de dados inicial (Catálogo de Aves) ---
+# --- Banco de dados inicial (Catálogo de Aves atualizado com detalhes) ---
 catalogo_aves = [
-    {"id": 1, "nome_popular": "Bem-te-vi"},
-    {"id": 2, "nome_popular": "João-de-barro"},
-    {"id": 3, "nome_popular": "Canário-da-terra"}
+    {
+        "id": 1, 
+        "nome_popular": "Bem-te-vi",
+        "nome_cientifico": "Pitangus sulphuratus",
+        "habitat": "Cidades, matas e proximidades de rios",
+        "alimentacao": "Insetos, frutas, pequenos peixes e anfíbios",
+        "curiosidade": "Seu canto característico soa exatamente como seu nome popular."
+    },
+    {
+        "id": 2, 
+        "nome_popular": "João-de-barro",
+        "nome_cientifico": "Furnarius rufus",
+        "habitat": "Campos, pastagens e áreas urbanas",
+        "alimentacao": "Insetos, larvas e aranhas no solo",
+        "curiosidade": "Constrói seu ninho em formato de forno usando barro e palha."
+    },
+    {
+        "id": 3, 
+        "nome_popular": "Canário-da-terra",
+        "nome_cientifico": "Sicalis flaveola",
+        "habitat": "Campos abertos e áreas de cerrado",
+        "alimentacao": "Sementes e pequenos insetos"
+        # Deixado sem o campo 'curiosidade' para testar a robustez do método .get()
+    }
 ]
 
 # --- Funções do Sistema ---
@@ -17,7 +38,7 @@ def exibir_menu():
     print("MENU PRINCIPAL")
     exibir_linha()
     print("1 - Listar aves")
-    print("2 - Conhecer uma ave")
+    print("2 - Conhecer uma ave (Detalhes)")  # Atualizado para refletir a nova funcionalidade
     print("3 - Ver uma curiosidade sobre aves")
     print("4 - Sobre a AveDex")
     print("0 - Sair")
@@ -33,7 +54,6 @@ def listar_aves(catalogo):
         print(f"{ave['id']} - {ave['nome_popular']}")
 
 
-# Nova função da Etapa 2: Buscar uma ave pelo ID
 def buscar_ave_por_id(catalogo, id_procurado):
     for ave in catalogo:
         if str(ave["id"]) == id_procurado:
@@ -41,14 +61,35 @@ def buscar_ave_por_id(catalogo, id_procurado):
     return None
 
 
-def mostrar_ave_inicial():
-    print("Ave escolhida: Bem-te-vi")
-    print("Nome científico: Pitangus sulphuratus")
-    print("O bem-te-vi é uma das aves mais conhecidas do Brasil.")
+# Nova função da Etapa 3: Exibir os detalhes completos de uma ave
+def exibir_detalhes_ave(ave):
+    print()
+    print("=" * 50)
+    print("DETALHES DA AVE")
+    print("=" * 50)
+    print(f"ID: {ave['id']}")
+    print(f"Nome popular: {ave['nome_popular']}")
+    print(f"Nome científico: {ave['nome_cientifico']}")
+    print(f"Habitat: {ave['habitat']}")
+    print(f"Alimentação: {ave['alimentacao']}")
+    # Uso do método .get() para chaves opcionais (como no Canário-da-terra)
+    print(f"Curiosidade: {ave.get('curiosidade', 'Não informada')}")
+
+
+# Nova função da Etapa 4: Coordenar a tela de seleção por ID
+def selecionar_ave_por_id(catalogo):
+    listar_aves(catalogo)
+    id_escolhido = input("\nDigite o ID da ave: ").strip()
+    ave_encontrada = buscar_ave_por_id(catalogo, id_escolhido)
+    
+    if ave_encontrada is None:
+        print("Ave não encontrada. Confira o ID informado.")
+    else:
+        exibir_detalhes_ave(ave_encontrada)
 
 
 def mostrar_curiosidade():
-    print("Curiosidade:")
+    print("Curiosidade Geral:")
     print("Muitas aves ajudam no equilíbrio ambiental ao dispersar sementes.")
 
 
@@ -85,28 +126,4 @@ while opcao_menu != "0":
         listar_aves(catalogo_aves)
 
     elif opcao_menu == "2":
-        mostrar_ave_inicial()
-
-    elif opcao_menu == "3":
-        mostrar_curiosidade()
-
-    elif opcao_menu == "4":
-        mostrar_sobre()
-
-    elif opcao_menu == "0":
-        print("Encerrando a AveDex.")
-        print(f"Até logo, {nome_usuario}!")
-
-    else:
-        print("Opção inválida. Digite apenas 0, 1, 2, 3 ou 4.")
-
-    if opcao_menu != "0":
-        pausar()
-
-
-# --- Teste da Etapa 2 (Executado após fechar o programa/digitar 0) ---
-# Como pede o exercício, colocamos este teste simples no final do arquivo:
-print("\n--- TESTE DA ETAPA 2 ---")
-ave_teste = buscar_ave_por_id(catalogo_aves, "1")
-print(ave_teste) 
-# Deve exibir no terminal: {'id': 1, 'nome_popular': 'Bem-te-vi'}
+        # Opção atualizada na Etapa 4
