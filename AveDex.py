@@ -16,14 +16,13 @@ def exibir_menu():
     exibir_linha()
     print("MENU PRINCIPAL")
     exibir_linha()
-    print("1 - Listar aves")  # Atualizado para a Etapa 1
+    print("1 - Listar aves")
     print("2 - Conhecer uma ave")
     print("3 - Ver uma curiosidade sobre aves")
     print("4 - Sobre a AveDex")
     print("0 - Sair")
 
 
-# Nova função da Etapa 1
 def listar_aves(catalogo):
     print()
     print("-" * 50)
@@ -32,6 +31,14 @@ def listar_aves(catalogo):
     
     for ave in catalogo:
         print(f"{ave['id']} - {ave['nome_popular']}")
+
+
+# Nova função da Etapa 2: Buscar uma ave pelo ID
+def buscar_ave_por_id(catalogo, id_procurado):
+    for ave in catalogo:
+        if str(ave["id"]) == id_procurado:
+            return ave
+    return None
 
 
 def mostrar_ave_inicial():
@@ -62,7 +69,7 @@ exibir_linha()
 
 nome_usuario = input("Digite seu nome: ").strip()
 
-# Mensagem de boas-vindas inicial (fora do loop, já que a opção 1 mudou)
+# Mensagem de boas-vindas inicial
 print(f"\nOlá, {nome_usuario}!")
 print("Seja bem-vindo(a) à AveDex.")
 
@@ -75,7 +82,7 @@ while opcao_menu != "0":
     print()
 
     if opcao_menu == "1":
-        listar_aves(catalogo_aves)  # Chamada atualizada da Etapa 1
+        listar_aves(catalogo_aves)
 
     elif opcao_menu == "2":
         mostrar_ave_inicial()
@@ -95,3 +102,11 @@ while opcao_menu != "0":
 
     if opcao_menu != "0":
         pausar()
+
+
+# --- Teste da Etapa 2 (Executado após fechar o programa/digitar 0) ---
+# Como pede o exercício, colocamos este teste simples no final do arquivo:
+print("\n--- TESTE DA ETAPA 2 ---")
+ave_teste = buscar_ave_por_id(catalogo_aves, "1")
+print(ave_teste) 
+# Deve exibir no terminal: {'id': 1, 'nome_popular': 'Bem-te-vi'}
