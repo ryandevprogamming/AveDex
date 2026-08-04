@@ -1,5 +1,113 @@
 import unicodedata
 
+<<<<<<< HEAD
+=======
+def escolher_ave(catalogo, mensagem):
+    listar_aves(catalogo)
+
+    id_escolhido = input(f"\n{mensagem}: ").strip()
+    ave_encontrada = buscar_ave_por_id(catalogo, id_escolhido)
+
+    if ave_encontrada is None:
+        print("Ave não encontrada. Confira o ID informado.")
+        return None
+    return ave_encontrada
+
+
+def comparar_duas_aves(catalogo):
+    print()
+    print("Escolha a primeira ave")
+
+    ave_1 = escolher_ave(catalogo, "Digite o ID da primeira ave")
+    if ave_1 is None:
+        return
+
+    ave_2 = escolher_ave(catalogo, "Digite o ID da segunda ave")
+    if ave_2 is None:
+        return
+
+    exibir_comparacao_aves(ave_1, ave_2)
+
+
+def exibir_comparacao_aves(ave_1, ave_2):
+    # Cabeçalho da comparação
+    print()
+    print("=" * 78)
+    print("COMPARAÇÃO ENTRE AVES")
+    print("=" * 78)
+
+    # Primeira linha: mostra os nomes das duas aves
+    imprimir_linha_comparacao(
+        "Campo",
+        ave_1["nome_popular"],
+        ave_2["nome_popular"]
+    )
+    print("-" * 78)
+
+    # Linhas de comparação textual
+    imprimir_linha_comparacao(
+        "Nome científico",
+        ave_1.get("nome_cientifico"),
+        ave_2.get("nome_cientifico")
+    )
+    imprimir_linha_comparacao(
+        "Ordem",
+        ave_1.get("ordem"),
+        ave_2.get("ordem")
+    )
+    imprimir_linha_comparacao(
+        "Família",
+        ave_1.get("familia"),
+        ave_2.get("familia")
+    )
+    imprimir_linha_comparacao(
+        "Dieta",
+        ave_1.get("dieta_tipo"),
+        ave_2.get("dieta_tipo")
+    )
+    imprimir_linha_comparacao(
+        "Habitat",
+        ave_1.get("habitat"),
+        ave_2.get("habitat")
+    )
+
+    # Linhas de comparação numérica com unidade
+    imprimir_linha_comparacao(
+        "Comprimento",
+        valor_ou_indisponivel(ave_1.get("comprimento_cm"), "cm"),
+        valor_ou_indisponivel(ave_2.get("comprimento_cm"), "cm")
+    )
+    imprimir_linha_comparacao(
+        "Peso",
+        valor_ou_indisponivel(ave_1.get("peso_g"), "g"),
+        valor_ou_indisponivel(ave_2.get("peso_g"), "g")
+    )
+    imprimir_linha_comparacao(
+        "Conservação",
+        ave_1.get("status_conservacao", "Não informado"),
+        ave_2.get("status_conservacao", "Não informado")
+    )
+    imprimir_linha_comparacao(
+        "Índice",
+        ave_1.get("indice_conservacao", "Não informado"),
+        ave_2.get("indice_conservacao", "Não informado")
+    )
+
+
+def valor_ou_indisponivel(valor, unidade=""):
+    if valor is None or valor == "":
+        return "Não informado"
+    if unidade != "":
+        return f"{valor} {unidade}"
+
+    return str(valor)
+
+
+def imprimir_linha_comparacao(rotulo, valor_1, valor_2):
+    print(f"{rotulo:<18} | {str(valor_1):<25} | {str(valor_2):<25}")
+
+
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
 def normalizar_texto(texto):
     texto = str(texto)
     texto = texto.lower().strip()
@@ -19,6 +127,7 @@ def exibir_linha():
 
 def exibir_menu():
     print()
+<<<<<<< HEAD
     exibir_linha()
     print("AVEDEX - MENU PRINCIPAL")
     exibir_linha()
@@ -27,11 +136,25 @@ def exibir_menu():
     print("3 - Ver detalhes de uma ave")
     print("4 - Sobre a AveDex")
     print("5 - Buscar aves (por nome, família, ordem ou dieta)")
+=======
+    print("=" * 50)
+    print("AVEDEX - MENU PRINCIPAL")
+    print("=" * 50)
+    print("1 - Listar aves")
+    print("2 - Buscar ave")
+    print("3 - Ver detalhes de uma ave")
+    print("4 - Comparar duas aves")
+    print("5 - Sobre a AveDex")
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
     print("0 - Sair")
 
 
 def mostrar_boas_vindas(nome_usuario):
+<<<<<<< HEAD
     print(f"Olá, {nome_usuario}!")
+=======
+    print(f"\nOlá, {nome_usuario}!")
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
     print("Seja bem-vindo(a) à AveDex.")
     print("Aqui vamos conhecer aves e praticar boas práticas.")
 
@@ -45,6 +168,7 @@ def listar_aves(catalogo):
         print(f"{ave['codigo']} - {ave['nome_popular']}")
 
 
+<<<<<<< HEAD
 
 def buscar_aves(catalogo, termo_busca):
   
@@ -54,6 +178,13 @@ def buscar_aves(catalogo, termo_busca):
    
     for ave in catalogo:
       
+=======
+def buscar_aves(catalogo, termo_busca):
+    resultados = []
+    termo = normalizar_texto(termo_busca)
+   
+    for ave in catalogo:
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
         campos_busca = [
             ave.get("nome_popular", ""),
             ave.get("nome_cientifico", ""),
@@ -63,7 +194,10 @@ def buscar_aves(catalogo, termo_busca):
         ]
      
         texto_busca = " ".join(campos_busca)
+<<<<<<< HEAD
         
+=======
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
         texto_busca = normalizar_texto(texto_busca)
         
         if termo in texto_busca:
@@ -125,18 +259,26 @@ def exibir_detalhes(ave):
     print(f"Habitat: {ave['habitat']}")
     print(f"Alimentação: {ave['alimentacao']}")
     print(f"Curiosidade: {ave['curiosidade']}")
+<<<<<<< HEAD
 
 
 def mostrar_sobre():
     print("Sobre a AveDex:")
     print("A AveDex é um catálogo interativo de aves.")
     print("O projeto evolui durante a disciplina de Boas Práticas.")
+=======
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
 
 
 def pausar():
     input("\nPressione ENTER para voltar ao menu...")
 
 
+<<<<<<< HEAD
+=======
+# --- Base de Dados (Catálogo) ---
+
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
 catalogo_aves = [
     {
         "codigo": 1,
@@ -146,6 +288,13 @@ catalogo_aves = [
         "familia": "Tyrannidae",
         "dieta_tipo": "Omnívora",
         "habitat": "Áreas abertas e cidades",
+<<<<<<< HEAD
+=======
+        "comprimento_cm": 23,
+        "peso_g": 68,
+        "status_conservacao": "Pouco preocupante",
+        "indice_conservacao": 1,
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
         "alimentacao": "Insetos, frutos e pequenos animais",
         "curiosidade": "Seu canto lembra a expressão bem-te-vi."
     },
@@ -157,6 +306,13 @@ catalogo_aves = [
         "familia": "Thraupidae",
         "dieta_tipo": "Granívora",
         "habitat": "Campos e áreas rurais",
+<<<<<<< HEAD
+=======
+        "comprimento_cm": 13,
+        "peso_g": 20,
+        "status_conservacao": "Pouco preocupante",
+        "indice_conservacao": 1,
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
         "alimentacao": "Sementes e pequenos insetos",
         "curiosidade": "O macho possui plumagem amarela intensa."
     },
@@ -168,6 +324,13 @@ catalogo_aves = [
         "familia": "Furnariidae",
         "dieta_tipo": "Insetívora",
         "habitat": "Campos, cidades e áreas rurais",
+<<<<<<< HEAD
+=======
+        "comprimento_cm": 20,
+        "peso_g": 49,
+        "status_conservacao": "Pouco preocupante",
+        "indice_conservacao": 1,
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
         "alimentacao": "Insetos e pequenos invertebrados",
         "curiosidade": "Constrói ninhos de barro."
     },
@@ -179,6 +342,13 @@ catalogo_aves = [
         "familia": "Psittacidae",
         "dieta_tipo": "Frugívora",
         "habitat": "Pantanal e Cerrado",
+<<<<<<< HEAD
+=======
+        "comprimento_cm": 100,
+        "peso_g": 1500,
+        "status_conservacao": "Vulnerável",
+        "indice_conservacao": 2,
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
         "alimentacao": "Frutos e sementes",
         "curiosidade": "É uma das maiores araras do mundo."
     },
@@ -190,6 +360,13 @@ catalogo_aves = [
         "familia": "Ramphastidae",
         "dieta_tipo": "Omnívora",
         "habitat": "Florestas e Cerrado",
+<<<<<<< HEAD
+=======
+        "comprimento_cm": 55,
+        "peso_g": 600,
+        "status_conservacao": "Pouco preocupante",
+        "indice_conservacao": 1,
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
         "alimentacao": "Frutas, ovos e pequenos animais",
         "curiosidade": "Possui um bico que pode chegar a 20 cm."
     }
@@ -203,6 +380,10 @@ print("AVEDEX")
 print("=" * 50)
 
 nome_usuario = input("Digite seu nome: ").strip()
+<<<<<<< HEAD
+=======
+mostrar_boas_vindas(nome_usuario)
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
 
 opcao_menu = ""
 
@@ -218,6 +399,7 @@ while opcao_menu != "0":
         mostrar_boas_vindas(nome_usuario)
 
     elif opcao_menu == "2":
+<<<<<<< HEAD
         listar_aves(catalogo_aves)
 
     elif opcao_menu == "3":
@@ -231,10 +413,19 @@ while opcao_menu != "0":
             catalogo_aves,
             codigo_escolhido
         )
+=======
+        tela_busca(catalogo_aves)
+
+    elif opcao_menu == "3":
+        listar_aves(catalogo_aves)
+        codigo_escolhido = input("\nDigite o código da ave para ver os detalhes: ").strip()
+        ave_encontrada = buscar_ave_por_id(catalogo_aves, codigo_escolhido)
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
 
         if ave_encontrada is not None:
             exibir_detalhes(ave_encontrada)
         else:
+<<<<<<< HEAD
             print("Ave não encontrada.")
 
     elif opcao_menu == "4":
@@ -242,13 +433,27 @@ while opcao_menu != "0":
 
     elif opcao_menu == "5":
         tela_busca(catalogo_aves)
+=======
+            print("Ave não encontrada. Confira o código informado.")
+
+    elif opcao_menu == "4":
+        comparar_duas_aves(catalogo_aves)
+
+    elif opcao_menu == "5":
+        print("A AveDex é um catálogo interativo de aves.")
+        print("Em breve, teremos batalha, imagens, sons e dados em arquivo JSON.")
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
 
     elif opcao_menu == "0":
         print("Encerrando a AveDex.")
         print(f"Até logo, {nome_usuario}!")
 
     else:
+<<<<<<< HEAD
         print("Opção inválida. Digite apenas uma das opções listadas (0 a 5).")
+=======
+        print("Opção inválida. Digite apenas 0, 1, 2, 3, 4 ou 5.")
+>>>>>>> e2395b36793e06f28240798e7406810ca8dd2c67
 
     if opcao_menu != "0":
         pausar()
