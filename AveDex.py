@@ -3,7 +3,7 @@ import unicodedata
 def escolher_ave(catalogo, mensagem):
     listar_aves(catalogo)
 
-    id_escolhido = input(f"\n{mensagem}:").strip()
+    id_escolhido = input(f"\n{mensagem}: ").strip()
     ave_encontrada = buscar_ave_por_id(catalogo, id_escolhido)
 
     if ave_encontrada is None:
@@ -11,8 +11,8 @@ def escolher_ave(catalogo, mensagem):
         return None
     return ave_encontrada
 
+
 def comparar_duas_aves(catalogo):
-    
     print()
     print("Escolha a primeira ave")
 
@@ -24,16 +24,17 @@ def comparar_duas_aves(catalogo):
     if ave_2 is None:
         return
 
-    exibir_comparacao_aves(ave_1,ave_2)
+    exibir_comparacao_aves(ave_1, ave_2)
+
 
 def exibir_comparacao_aves(ave_1, ave_2):
-    # Cabeçalho da comparação.
+    # Cabeçalho da comparação
     print()
     print("=" * 78)
     print("COMPARAÇÃO ENTRE AVES")
     print("=" * 78)
 
-    # Primeira linha: mostra os nomes das duas aves.
+    # Primeira linha: mostra os nomes das duas aves
     imprimir_linha_comparacao(
         "Campo",
         ave_1["nome_popular"],
@@ -41,7 +42,7 @@ def exibir_comparacao_aves(ave_1, ave_2):
     )
     print("-" * 78)
 
-    # Linhas de comparação textual.
+    # Linhas de comparação textual
     imprimir_linha_comparacao(
         "Nome científico",
         ave_1.get("nome_cientifico"),
@@ -68,7 +69,7 @@ def exibir_comparacao_aves(ave_1, ave_2):
         ave_2.get("habitat")
     )
 
-    # Linhas de comparação numérica com unidade.
+    # Linhas de comparação numérica com unidade
     imprimir_linha_comparacao(
         "Comprimento",
         valor_ou_indisponivel(ave_1.get("comprimento_cm"), "cm"),
@@ -90,6 +91,7 @@ def exibir_comparacao_aves(ave_1, ave_2):
         ave_2.get("indice_conservacao", "Não informado")
     )
 
+
 def valor_ou_indisponivel(valor, unidade=""):
     if valor is None or valor == "":
         return "Não informado"
@@ -99,7 +101,7 @@ def valor_ou_indisponivel(valor, unidade=""):
     return str(valor)
 
 
-def imprimir_linha_comparacao(rotulo,valor_1,valor_2):
+def imprimir_linha_comparacao(rotulo, valor_1, valor_2):
     print(f"{rotulo:<18} | {str(valor_1):<25} | {str(valor_2):<25}")
 
 
@@ -122,19 +124,19 @@ def exibir_linha():
 
 def exibir_menu():
     print()
-    exibir_linha()
+    print("=" * 50)
     print("AVEDEX - MENU PRINCIPAL")
-    exibir_linha()
-    print("1 - Ver mensagem de boas-vindas")
-    print("2 - Listar aves")
+    print("=" * 50)
+    print("1 - Listar aves")
+    print("2 - Buscar ave")
     print("3 - Ver detalhes de uma ave")
-    print("4 - Sobre a AveDex")
-    print("5 - Buscar aves (por nome, família, ordem ou dieta)")
+    print("4 - Comparar duas aves")
+    print("5 - Sobre a AveDex")
     print("0 - Sair")
 
 
 def mostrar_boas_vindas(nome_usuario):
-    print(f"Olá, {nome_usuario}!")
+    print(f"\nOlá, {nome_usuario}!")
     print("Seja bem-vindo(a) à AveDex.")
     print("Aqui vamos conhecer aves e praticar boas práticas.")
 
@@ -148,15 +150,11 @@ def listar_aves(catalogo):
         print(f"{ave['codigo']} - {ave['nome_popular']}")
 
 
-
 def buscar_aves(catalogo, termo_busca):
-  
     resultados = []
-  
     termo = normalizar_texto(termo_busca)
    
     for ave in catalogo:
-      
         campos_busca = [
             ave.get("nome_popular", ""),
             ave.get("nome_cientifico", ""),
@@ -166,7 +164,6 @@ def buscar_aves(catalogo, termo_busca):
         ]
      
         texto_busca = " ".join(campos_busca)
-        
         texto_busca = normalizar_texto(texto_busca)
         
         if termo in texto_busca:
@@ -230,40 +227,25 @@ def exibir_detalhes(ave):
     print(f"Curiosidade: {ave['curiosidade']}")
 
 
-def mostrar_sobre():
-    print("Sobre a AveDex:")
-    print("A AveDex é um catálogo interativo de aves.")
-    print("O projeto evolui durante a disciplina de Boas Práticas.")
-
-
 def pausar():
     input("\nPressione ENTER para voltar ao menu...")
 
 
+# --- Base de Dados (Catálogo) ---
+
 catalogo_aves = [
     {
-        # Código único da ave.
         "codigo": 1,
-        # Nomes da ave.
         "nome_popular": "Bem-te-vi",
         "nome_cientifico": "Pitangus sulphuratus",
-        # Classificação.
         "ordem": "Passeriformes",
         "familia": "Tyrannidae",
-        # Tipo principal de dieta.
         "dieta_tipo": "Omnívora",
-        # Ambiente onde a ave costuma viver.
         "habitat": "Áreas abertas e cidades",
-        # Medidas aproximadas usadas na comparação.
         "comprimento_cm": 23,
         "peso_g": 68,
-        # Situação de conservação.
-        # Nesta versão didática, usamos texto simples.
         "status_conservacao": "Pouco preocupante",
-        # Índice numérico que será útil futuramente na batalha.
-        # Quanto maior, maior será o nível de atenção na conservação.
         "indice_conservacao": 1,
-        # Outros detalhes.
         "alimentacao": "Insetos, frutos e pequenos animais",
         "curiosidade": "Seu canto lembra a expressão bem-te-vi."
     },
@@ -337,52 +319,45 @@ print("AVEDEX")
 print("=" * 50)
 
 nome_usuario = input("Digite seu nome: ").strip()
+mostrar_boas_vindas(nome_usuario)
 
 opcao_menu = ""
 
 while opcao_menu != "0":
-
     exibir_menu()
 
     opcao_menu = input("Escolha uma opção: ").strip()
-
     print()
 
     if opcao_menu == "1":
-        mostrar_boas_vindas(nome_usuario)
+        listar_aves(catalogo_aves)
 
     elif opcao_menu == "2":
-        listar_aves(catalogo_aves)
+        tela_busca(catalogo_aves)
 
     elif opcao_menu == "3":
         listar_aves(catalogo_aves)
-
-        codigo_escolhido = input(
-            "\nDigite o código da ave: "
-        ).strip()
-
-        ave_encontrada = buscar_ave_por_id(
-            catalogo_aves,
-            codigo_escolhido
-        )
+        codigo_escolhido = input("\nDigite o código da ave para ver os detalhes: ").strip()
+        ave_encontrada = buscar_ave_por_id(catalogo_aves, codigo_escolhido)
 
         if ave_encontrada is not None:
             exibir_detalhes(ave_encontrada)
         else:
-            print("Ave não encontrada.")
+            print("Ave não encontrada. Confira o código informado.")
 
     elif opcao_menu == "4":
-        mostrar_sobre()
+        comparar_duas_aves(catalogo_aves)
 
     elif opcao_menu == "5":
-        tela_busca(catalogo_aves)
+        print("A AveDex é um catálogo interativo de aves.")
+        print("Em breve, teremos batalha, imagens, sons e dados em arquivo JSON.")
 
     elif opcao_menu == "0":
         print("Encerrando a AveDex.")
         print(f"Até logo, {nome_usuario}!")
 
     else:
-        print("Opção inválida. Digite apenas uma das opções listadas (0 a 5).")
+        print("Opção inválida. Digite apenas 0, 1, 2, 3, 4 ou 5.")
 
     if opcao_menu != "0":
         pausar()
