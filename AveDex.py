@@ -35,6 +35,24 @@ CAMPOS_COMPARACAO = [
 ]
 
 
+def linha(caractere="=", largura=LARGURA_TELA):
+    # Retorna uma linha formada pela repetição de um caractere.
+    return caractere * largura
+
+
+def titulo(texto):
+    # Exibe um título padronizado.
+    print()
+    print(linha("="))
+    print(texto)
+    print(linha("="))
+
+
+def mensagem_aviso(texto):
+    # Exibe uma mensagem simples de aviso.
+    print(f"[AVISO] {texto}")
+
+
 def normalizar_texto(texto):
     # Converte o valor recebido para texto.
     texto = str(texto)
@@ -57,17 +75,11 @@ def pausar():
 
 
 def exibir_menu():
-    # Exibe as opções principais do sistema.
-    print()
-    print("=" * 50)
-    print("AVEDEX - MENU PRINCIPAL")
-    print("=" * 50)
-    print("1 - Listar aves")
-    print("2 - Buscar ave")
-    print("3 - Ver detalhes de uma ave")
-    print("4 - Comparar duas aves")
-    print("5 - Sobre a AveDex")
-    print("0 - Sair")
+# Exibe o título do menu.
+    titulo("AVEDEX - MENU PRINCIPAL")
+# Percorre a lista de opções e imprime uma por uma.
+for opcao in OPCOES_MENU:
+    print(opcao)
 
 
 def listar_aves(catalogo):
