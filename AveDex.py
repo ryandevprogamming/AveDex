@@ -1,58 +1,45 @@
 import unicodedata
 
-
-# Largura usada em títulos e linhas de separação.
+# ======================================================================================
+# Constantes
+# ======================================================================================
 LARGURA_TELA = 78
-# Lista com as opções exibidas no menu principal.
+
 OPCOES_MENU = [
-"1 - Listar aves",
-"2 - Buscar ave",
-"3 - Ver detalhes de uma ave",
-"4 - Comparar duas aves",
-"5 - Sobre a AveDex",
-"0 - Sair"
+    "1 - Listar aves",
+    "2 - Buscar ave",
+    "3 - Ver detalhes de uma ave",
+    "4 - Comparar duas aves",
+    "5 - Sobre a AveDex",
+    "0 - Sair",
 ]
-# Campos usados na busca textual.
+
 CAMPOS_BUSCA = [
-"nome_popular",
-"nome_cientifico",
-"familia",
-"ordem",
-"dieta_tipo"
+    "nome_popular",
+    "nome_cientifico",
+    "familia",
+    "ordem",
+    "dieta_tipo",
 ]
-# Campos exibidos na comparação.
-# Cada item possui: rótulo na tela, chave do dicionário e unidade.
+
 CAMPOS_COMPARACAO = [
-("Nome científico", "nome_cientifico", ""),
-("Ordem", "ordem", ""),
-("Família", "familia", ""),
-("Dieta", "dieta_tipo", ""),
-("Habitat", "habitat", ""),
-("Comprimento", "comprimento_cm", "cm"),
-("Peso", "peso_g", "g"),
-("Conservação", "status_conservacao", ""),
-("Índice", "indice_conservacao", "")
+    ("Nome científico", "nome_cientifico", ""),
+    ("Ordem", "ordem", ""),
+    ("Família", "familia", ""),
+    ("Dieta", "dieta_tipo", ""),
+    ("Habitat", "habitat", ""),
+    ("Comprimento", "comprimento_cm", "cm"),
+    ("Peso", "peso_g", "g"),
+    ("Conservação", "status_conservacao", ""),
+    ("Índice", "indice_conservacao", ""),
 ]
 
 
-def criar_texto_busca(ave):
-    # Lista temporária que guardará os valores dos campos pesquisáveis.
-    valores = []
-
-    # Percorre cada campo definido em CAMPOS_BUSCA.
-    for campo in CAMPOS_BUSCA:
-        # Busca o valor do campo no dicionário da ave.
-        # Se o campo não existir, usa texto vazio.
-        valores.append(str(ave.get(campo, "")))
-
-    # Junta todos os valores em um único texto.
-    texto = " ".join(valores)
-
-    # Normaliza o texto para facilitar a busca.
-    return normalizar_texto(texto)
-
+# ======================================================================================
+# Funções auxiliares
+# ======================================================================================
 def linha(caractere="=", largura=LARGURA_TELA):
-    # Retorna uma linha formada pela repetição de um caractere.
+    # Retorna uma linha com o caractere repetido.
     return caractere * largura
 
 
@@ -65,18 +52,18 @@ def titulo(texto):
 
 
 def mensagem_aviso(texto):
-    # Exibe uma mensagem simples de aviso.
+    # Exibe uma mensagem de aviso.
     print(f"[AVISO] {texto}")
 
 
 def normalizar_texto(texto):
-    # Converte o valor recebido para texto.
+    # Converte para texto.
     texto = str(texto)
-    # Padroniza para minúsculas e remove espaços extras.
+    # Padroniza minúsculas e remove espaços extras.
     texto = texto.lower().strip()
     # Separa letras e acentos.
     texto = unicodedata.normalize("NFD", texto)
-    # Remove os acentos.
+    # Remove os sinais de acentuação.
     texto = "".join(
         caractere
         for caractere in texto
@@ -90,49 +77,59 @@ def pausar():
     input("\nPressione ENTER para voltar ao menu...")
 
 
-def exibir_menu():
-# Exibe o título do menu.
-    titulo("AVEDEX - MENU PRINCIPAL")
-# Percorre a lista de opções e imprime uma por uma.
-for opcao in OPCOES_MENU:
-    print(opcao)
-
-
-def listar_aves(catalogo):
-    # Mostra uma lista simples com ID e nome popular.
-    print()
-    print("=" * 50)
-    print("AVES CADASTRADAS")
-    print("=" * 50)
-    for ave in catalogo:
-        print(f"{ave['id']} - {ave['nome_popular']}")
-
-
-def buscar_ave_por_id(catalogo, id_procurado):
-    # Percorre o catálogo procurando o ID informado.
-    for ave in catalogo:
-        if str(ave["id"]) == id_procurado:
-            return ave
-    # Retorna None quando não encontra.
-    return None
-
-
 def valor_ou_indisponivel(valor, unidade=""):
-    # Trata valor ausente.
+    # Se não houver valor, retorna uma mensagem clara.
     if valor is None or valor == "":
         return "Não informado"
-    # Acrescenta unidade quando necessário.
+    # Se houver unidade, acrescenta a unidade ao valor.
     if unidade != "":
         return f"{valor} {unidade}"
     return str(valor)
 
 
+def cortar_texto(texto, tamanho=25):
+    # Trata texto ausente.
+    if texto is None:
+        return "Não informado"
+    texto = str(texto).strip()
+    # Se o texto já for pequeno, retorna como está.
+    if len(texto) <= tamanho:
+        return texto
+    # Corta o texto e adiciona reticências.
+    return texto[: tamanho - 3] + "..."
+
+
+# ======================================================================================
+# Menu e listagem
+# ======================================================================================
+def exibir_menu():
+    # Exibe o menu principal com base na lista OPCOES_MENU.
+    titulo("AVEDEX - MENU PRINCIPAL")
+    for opcao in OPCOES_MENU:
+        print(opcao)
+
+
+def listar_aves(catalogo):
+    # Lista todas as aves cadastradas.
+    titulo("AVES CADASTRADAS")
+    for ave in catalogo:
+        print(f"{ave['id']} - {ave['nome_popular']}")
+
+
+def buscar_ave_por_id(catalogo, id_procurado):
+    # Procura uma ave pelo ID.
+    for ave in catalogo:
+        if str(ave["id"]) == id_procurado:
+            return ave
+    return None
+
+
+# ======================================================================================
+# Detalhes da ave
+# ======================================================================================
 def exibir_detalhes_ave(ave):
-    # Exibe detalhes de uma única ave.
-    print()
-    print("=" * 50)
-    print("DETALHES DA AVE")
-    print("=" * 50)
+    # Exibe informações detalhadas de uma ave.
+    titulo("DETALHES DA AVE")
     print(f"ID: {ave['id']}")
     print(f"Nome popular: {ave['nome_popular']}")
     print(f"Nome científico: {ave['nome_cientifico']}")
@@ -153,42 +150,44 @@ def exibir_detalhes_ave(ave):
 
 
 def selecionar_ave_por_id(catalogo):
-    # Mostra as aves e permite escolher uma pelo ID.
+    # Permite ao usuário escolher uma ave pelo ID.
     listar_aves(catalogo)
     id_escolhido = input("\nDigite o ID da ave: ").strip()
     ave_encontrada = buscar_ave_por_id(catalogo, id_escolhido)
     if ave_encontrada is None:
-        print("Ave não encontrada. Confira o ID informado.")
+        mensagem_aviso("Ave não encontrada. Confira o ID informado.")
     else:
         exibir_detalhes_ave(ave_encontrada)
 
 
+# ======================================================================================
+# Busca textual
+# ======================================================================================
+def criar_texto_busca(ave):
+    # Monta o texto que será usado na busca.
+    valores = []
+    for campo in CAMPOS_BUSCA:
+        valores.append(str(ave.get(campo, "")))
+    texto = " ".join(valores)
+    return normalizar_texto(texto)
+
+
 def buscar_aves(catalogo, termo_busca):
-    # Lista que receberá as aves encontradas.
+    # Busca aves cujo texto contenha o termo digitado.
     resultados = []
-
-    # Normaliza o termo digitado pelo usuário.
     termo = normalizar_texto(termo_busca)
-
-    # Percorre todas as aves.
     for ave in catalogo:
-        # Cria o texto pesquisável da ave.
         texto_busca = criar_texto_busca(ave)
-
-        # Se o termo estiver no texto, adiciona a ave aos resultados.
         if termo in texto_busca:
             resultados.append(ave)
-
     return resultados
 
+
 def exibir_resultados_busca(resultados):
-    # Exibe as aves encontradas pela busca.
-    print()
-    print("=" * 50)
-    print("RESULTADOS DA BUSCA")
-    print("=" * 50)
+    # Exibe a lista de resultados da busca.
+    titulo("RESULTADOS DA BUSCA")
     if len(resultados) == 0:
-        print("Nenhuma ave encontrada.")
+        mensagem_aviso("Nenhuma ave encontrada.")
     else:
         for ave in resultados:
             print(
@@ -198,10 +197,10 @@ def exibir_resultados_busca(resultados):
 
 
 def tela_busca(catalogo):
-    # Solicita um termo ao usuário.
+    # Tela completa de busca textual.
     termo = input("Digite parte do nome, família, ordem ou dieta: ").strip()
     if termo == "":
-        print("Digite algum texto para realizar a busca.")
+        mensagem_aviso("Digite algum texto para realizar a busca.")
         return
     resultados = buscar_aves(catalogo, termo)
     exibir_resultados_busca(resultados)
@@ -212,67 +211,73 @@ def tela_busca(catalogo):
         if escolha != "":
             ave_encontrada = buscar_ave_por_id(resultados, escolha)
             if ave_encontrada is None:
-                print("ID não encontrado nos resultados.")
+                mensagem_aviso("ID não encontrado nos resultados.")
             else:
                 exibir_detalhes_ave(ave_encontrada)
 
 
+# ======================================================================================
+# Comparação entre aves
+# ======================================================================================
 def imprimir_linha_comparacao(rotulo, valor_1, valor_2):
-    # Imprime uma linha alinhada da comparação.
+    # Imprime uma linha alinhada com rótulo e dois valores.
     print(f"{rotulo:<18} | {str(valor_1):<25} | {str(valor_2):<25}")
 
 
+def preparar_valor_comparacao(ave, campo, unidade):
+    # Busca o valor original da ave.
+    valor = ave.get(campo)
+    # Habitat costuma ser longo, então cortamos para preservar a tabela.
+    if campo == "habitat":
+        return cortar_texto(valor, 25)
+    return valor_ou_indisponivel(valor, unidade)
+
+
 def exibir_comparacao_aves(ave_1, ave_2):
-    # Cabeçalho da comparação.
+    # Exibe duas aves lado a lado.
     print()
     print(linha("=", 78))
     print("COMPARAÇÃO ENTRE AVES")
     print(linha("=", 78))
-
-    # Primeira linha com o nome das aves.
     imprimir_linha_comparacao(
         "Campo", ave_1["nome_popular"], ave_2["nome_popular"]
     )
     print(linha("-", 78))
-
-    # Percorre todos os campos configurados em CAMPOS_COMPARACAO.
     for rotulo, campo, unidade in CAMPOS_COMPARACAO:
-        # Obtém e formata o valor da primeira ave.
-        valor_1 = valor_ou_indisponivel(ave_1.get(campo), unidade)
-        # Obtém e formata o valor da segunda ave.
-        valor_2 = valor_ou_indisponivel(ave_2.get(campo), unidade)
-        # Imprime a linha já formatada.
+        valor_1 = preparar_valor_comparacao(ave_1, campo, unidade)
+        valor_2 = preparar_valor_comparacao(ave_2, campo, unidade)
         imprimir_linha_comparacao(rotulo, valor_1, valor_2)
 
 
 def escolher_ave(catalogo, mensagem):
-    # Lista as aves e pede ao usuário o ID desejado.
+    # Lista as aves e pede um ID.
     listar_aves(catalogo)
     id_escolhido = input(f"\n{mensagem}: ").strip()
     ave_encontrada = buscar_ave_por_id(catalogo, id_escolhido)
     if ave_encontrada is None:
-        print("Ave não encontrada. Confira o ID informado.")
+        mensagem_aviso("Ave não encontrada. Confira o ID informado.")
         return None
     return ave_encontrada
 
 
 def comparar_duas_aves(catalogo):
-    # Escolhe a primeira ave.
+    # Escolhe e compara duas aves.
     print()
     print("Escolha a primeira ave")
     ave_1 = escolher_ave(catalogo, "Digite o ID da primeira ave")
     if ave_1 is None:
         return
-    # Escolhe a segunda ave.
     print()
     print("Escolha a segunda ave")
     ave_2 = escolher_ave(catalogo, "Digite o ID da segunda ave")
     if ave_2 is None:
         return
-    # Exibe a comparação.
     exibir_comparacao_aves(ave_1, ave_2)
 
 
+# ======================================================================================
+# Dados
+# ======================================================================================
 catalogo_aves = [
     {
         "id": 1,
@@ -351,6 +356,9 @@ catalogo_aves = [
     },
 ]
 
+# ======================================================================================
+# Programa principal
+# ======================================================================================
 opcao_menu = ""
 while opcao_menu != "0":
     exibir_menu()
@@ -371,7 +379,7 @@ while opcao_menu != "0":
     elif opcao_menu == "0":
         print("Encerrando a AveDex. Até logo!")
     else:
-        print("Opção inválida. Digite apenas 0, 1, 2, 3, 4 ou 5.")
+        mensagem_aviso("Opção inválida. Digite apenas 0, 1, 2, 3, 4 ou 5.")
 
     if opcao_menu != "0":
         pausar()
